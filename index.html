@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Терапия">
-<link rel="manifest" href="manifest.json?v=tp-4">
+<link rel="manifest" href="manifest.json?v=tp-5">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-180.png">
 <title>Терапия</title>
@@ -15,6 +15,7 @@
 <style>
 :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 body{margin:0;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
 /* Layout: всё на один экран телефона — шапка с днём, компактная лента, курс со счётчиками (раскрывается и правится), заметка и настройки свёрнуты */
 :root{
   --bg:#F3F6F5; --card:#FFFFFF; --fg:#14201C; --muted:#4B5C56; --line:#DCE4E1;
@@ -165,7 +166,7 @@ textarea.box{height:110px;border-radius:10px;border:1px solid var(--line);backgr
     </div>
   </details>
 
-  <div class="foot"><b>it<i>i</i>van</b><span>· tp-4</span></div>
+  <div class="foot"><b>it<i>i</i>van</b><span>· tp-5</span></div>
 </div>
 
 <script>
@@ -348,7 +349,7 @@ textarea.box{height:110px;border-radius:10px;border:1px solid var(--line);backgr
   $('bf').onchange=function(){if(this.value){st.bf=this.value;save();render();}};
 
   // ===== Релиз: версия, пуш, импорт/экспорт =====
-  var APP_VER='tp-4';
+  var APP_VER='tp-5';
   var API_URL='https://functions.yandexcloud.net/d4elpg9r75i48or6lqpi'; // адрес функции terapiya-push (https://functions.yandexcloud.net/...)
   var VAPID='BEezIUjE8EvUxvOHE81wvW1nWYMDuzEPWDpNZwjrzHFp-P3XoYVa2FJn8Whhtgl5uhsBt4w8HRud9bOpscnBuPM';
   function configured(){return API_URL.indexOf('https://')===0}
