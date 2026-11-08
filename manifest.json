@@ -1,6 +1,7 @@
 {
   "name": "Терапия",
   "short_name": "Терапия",
+  "id": "./?app=terapiya-1",
   "description": "Напоминания о приёме лекарств по схеме врача",
   "start_url": "./",
   "scope": "./",
@@ -10,7 +11,21 @@
   "theme_color": "#020A05",
   "lang": "ru",
   "icons": [
-    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
-    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ]
 }

@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Терапия">
-<link rel="manifest" href="manifest.json">
+<link rel="manifest" href="manifest.json?v=tp-4">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-180.png">
 <title>Терапия</title>
@@ -165,7 +165,7 @@ textarea.box{height:110px;border-radius:10px;border:1px solid var(--line);backgr
     </div>
   </details>
 
-  <div class="foot"><b>it<i>i</i>van</b><span>· tp-3</span></div>
+  <div class="foot"><b>it<i>i</i>van</b><span>· tp-4</span></div>
 </div>
 
 <script>
@@ -348,7 +348,7 @@ textarea.box{height:110px;border-radius:10px;border:1px solid var(--line);backgr
   $('bf').onchange=function(){if(this.value){st.bf=this.value;save();render();}};
 
   // ===== Релиз: версия, пуш, импорт/экспорт =====
-  var APP_VER='tp-3';
+  var APP_VER='tp-4';
   var API_URL='https://functions.yandexcloud.net/d4elpg9r75i48or6lqpi'; // адрес функции terapiya-push (https://functions.yandexcloud.net/...)
   var VAPID='BEezIUjE8EvUxvOHE81wvW1nWYMDuzEPWDpNZwjrzHFp-P3XoYVa2FJn8Whhtgl5uhsBt4w8HRud9bOpscnBuPM';
   function configured(){return API_URL.indexOf('https://')===0}

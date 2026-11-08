@@ -1,5 +1,5 @@
 // Терапия — service worker: офлайн-кэш + пуш-уведомления
-const VERSION = 'tp-3';
+const VERSION = 'tp-4';
 const CACHE = 'terapiya-' + VERSION;
 const API = 'https://functions.yandexcloud.net/d4elpg9r75i48or6lqpi'; // тот же адрес, что API_URL в index.html
 const FILES = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png', './icon-180.png', './badge-96.png'];
