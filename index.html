@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Терапия">
-<link rel="manifest" href="manifest.json?v=tp-5">
+<link rel="manifest" href="manifest.json?v=tp-7">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-180.png">
 <title>Терапия</title>
@@ -166,7 +166,8 @@ textarea.box{height:110px;border-radius:10px;border:1px solid var(--line);backgr
     </div>
   </details>
 
-  <div class="foot"><b>it<i>i</i>van</b><span>· tp-5</span></div>
+  <div class="foot"><b>it<i>i</i>van</b><span>· tp-7</span></div>
+  <div class="foot" id="offSt" style="margin-top:-6px"></div>
 </div>
 
 <script>
@@ -349,7 +350,7 @@ textarea.box{height:110px;border-radius:10px;border:1px solid var(--line);backgr
   $('bf').onchange=function(){if(this.value){st.bf=this.value;save();render();}};
 
   // ===== Релиз: версия, пуш, импорт/экспорт =====
-  var APP_VER='tp-5';
+  var APP_VER='tp-7';
   var API_URL='https://functions.yandexcloud.net/d4elpg9r75i48or6lqpi'; // адрес функции terapiya-push (https://functions.yandexcloud.net/...)
   var VAPID='BEezIUjE8EvUxvOHE81wvW1nWYMDuzEPWDpNZwjrzHFp-P3XoYVa2FJn8Whhtgl5uhsBt4w8HRud9bOpscnBuPM';
   function configured(){return API_URL.indexOf('https://')===0}
@@ -387,7 +388,19 @@ textarea.box{height:110px;border-radius:10px;border:1px solid var(--line);backgr
   function sync(){
     if(!st.push||!configured()||!('serviceWorker' in navigator))return;
     getSub().then(function(sub){
-      if(!sub){st.push=false;save();pushUI();return;}
+      if(sub)return sub;
+      // Android иногда сам сбрасывает подписку (обновление, чистка памяти).
+      // Пуши включали и разрешение есть — тихо подписываемся заново, как в «Кто когда»
+      if('Notification' in window&&Notification.permission==='granted'){
+        return navigator.serviceWorker.ready.then(function(reg){return reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64(VAPID)})});
+      }
+      return null;
+    }).then(function(sub){
+      if(!sub){
+        if('Notification' in window&&Notification.permission==='denied'){st.push=false;save();pushUI();pushMsg('уведомления запрещены в настройках телефона');}
+        else pushMsg('подписка слетела — нажми «Выключить» и включи заново');
+        return;
+      }
       return api({action:'sync',uid:uid(),sub:sub.toJSON(),items:upcoming()}).then(function(j){
         pushMsg(j&&j.ok?'включены · впереди '+j.count:'ошибка сервера');
       });
@@ -465,6 +478,15 @@ textarea.box{height:110px;border-radius:10px;border:1px solid var(--line);backgr
     navigator.serviceWorker.register('./sw.js?v='+APP_VER).catch(function(){});
     navigator.serviceWorker.addEventListener('message',function(e){if(e.data&&e.data.type==='pending')applyPending()});
   }
+  // Работает ли без сети: есть ли index.html в кэше
+  function offlineState(){
+    if(!('caches' in window)){$('offSt').textContent='';return;}
+    caches.match('index.html',{ignoreSearch:true}).then(function(r){
+      $('offSt').textContent=r?'✓ работает без сети':'⚠ без сети пока не откроется — запустите с интернетом';
+    }).catch(function(){});
+  }
+  offlineState();
+  if('serviceWorker' in navigator)navigator.serviceWorker.ready.then(function(){setTimeout(offlineState,1500)});
   pushUI(); applyPending(); syncSoon();
   render();
   setInterval(function(){var a=document.activeElement;if(!edit&&!(a&&a.tagName==='INPUT'))render()},60000);
